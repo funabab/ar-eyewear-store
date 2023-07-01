@@ -1,0 +1,6 @@
+@import 'tailwindcss/tailwind.css';
+
+html,
+body {
+  @apply min-h-full;
+}
