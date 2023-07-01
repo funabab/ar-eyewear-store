@@ -2,5 +2,5 @@
 
 html,
 body {
-  @apply min-h-full;
+  @apply min-h-full font-roboto;
 }

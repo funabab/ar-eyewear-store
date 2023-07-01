@@ -1,9 +1,23 @@
 ---
 import { Icon } from 'astro-icon'
 interface Props extends astroHTML.JSX.HTMLAttributes {}
-const { class: className, ...props } = Astro.props
+const props = Astro.props
 ---
 
-<header class:list={[className, 'py-10']} {...props}>
-  <Icon name="eva:grid-fill" class="h-5" />
+<header {...props}>
+  <div class="py-5">
+    <button>
+      <Icon name="eva:grid-fill" class="h-5" />
+    </button>
+  </div>
+  <div class="flex justify-between items-center">
+    <h1 class="font-normal text-black uppercase font-ibm-plex-sans">
+      <span class="font-bold">Eye</span>Wear
+    </h1>
+    <div>
+      <button>
+        <Icon name="system-uicons:sliders" class="h-6" />
+      </button>
+    </div>
+  </div>
 </header>

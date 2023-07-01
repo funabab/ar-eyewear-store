@@ -1,8 +1,15 @@
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx,astro}"],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx,astro}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ['Poppins', ...defaultTheme.fontFamily.sans],
+        'ibm-plex-sans': ['IBM Plex Sans', ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
-  plugins: [],
-};
+  plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
+}

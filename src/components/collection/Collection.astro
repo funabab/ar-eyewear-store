@@ -1,0 +1,57 @@
+---
+import ItemCard from '../card/ItemCard.astro'
+import { COLLECTIONS } from './collections'
+
+interface Props {
+  collection?: string
+}
+
+const { collection = 'new' } = Astro.props
+---
+
+<div class="py-5">
+  <ul
+    class="flex items-start gap-x-4 flex-nowrap overflow-auto scrollbar-none hover:scrollbar-thin"
+  >
+    {
+      Object.entries(COLLECTIONS).map(([collectionSlug, collectionTitle]) => (
+        <li
+          class:list={[
+            {
+              'text-black': collectionSlug === collection,
+              'text-[#cacaca]': collectionSlug !== collection,
+            },
+          ]}
+        >
+          <a
+            href={
+              collectionSlug === 'new' ? '/' : `/collections/${collectionSlug}`
+            }
+            class="flex flex-col items-center"
+          >
+            <span class="whitespace-nowrap">{collectionTitle}</span>
+            {collectionSlug === collection && <span>&#x2022;</span>}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 mt-5 gap-4">
+    <a href="/item/id">
+      <ItemCard />
+    </a>
+
+    <a href="/item/id">
+      <ItemCard />
+    </a>
+
+    <a href="/item/id">
+      <ItemCard />
+    </a>
+
+    <a href="/item/id">
+      <ItemCard />
+    </a>
+  </div>
+</div>
