@@ -2,5 +2,5 @@
 
 html,
 body {
-  @apply min-h-full font-roboto;
+  @apply min-h-full font-roboto overscroll-contain;
 }

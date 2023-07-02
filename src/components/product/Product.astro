@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets'
+import ProductLayout from '@/layouts/ProductLayout.astro'
+import { Icon } from 'astro-icon'
+import ProductCounter from '@/islands/product/ProductCounter'
+import ProductPrice from '@/islands/product/ProductPrice'
+---
+
+<ProductLayout>
+  <div class="h-[40vh] relative max-w-4xl mx-auto">
+    <Image
+      src="https://picsum.photos/seed/picsum/200/300"
+      alt=""
+      width={500}
+      height={500}
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="absolute top-0 left-0 right-0 flex py-5 px-5">
+    <button class="ml-auto">
+      <Icon name="mdi:heart-outline" class="h-10" />
+    </button>
+  </div>
+  <div class="max-w-2xl mx-auto px-4">
+    <h2 class="font-normal text-2xl mt-5 uppercase">
+      <span class="font-bold"> Mason</span>
+      <span>Sunglasses</span>
+    </h2>
+
+    <div class="flex justify-between items-center">
+      <ProductCounter client:load />
+      <ProductPrice price={355} client:load />
+    </div>
+  </div>
+
+  <div
+    class="absolute bottom-0 left-0 right-0 grid grid-cols-2 md:flex md:justify-end"
+  >
+    <button
+      class="uppercase font-bold font-ibm-plex-sans bg-neutral-200 py-4 px-10 text-black hover:opacity-70"
+      >Try with AR</button
+    >
+    <button
+      class="uppercase font-bold font-ibm-plex-sans bg-black text-white py-4 px-10 hover:opacity-70"
+      >Add to bag</button
+    >
+  </div>
+</ProductLayout>

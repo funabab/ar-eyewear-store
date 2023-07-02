@@ -1,0 +1,18 @@
+---
+import Product from '@/components/product/Product.astro'
+import ProductLayout from '@/layouts/ProductLayout.astro'
+
+export function getStaticPaths() {
+  return [
+    {
+      params: {
+        id: 'id',
+      },
+    },
+  ]
+}
+---
+
+<ProductLayout>
+  <Product />
+</ProductLayout>

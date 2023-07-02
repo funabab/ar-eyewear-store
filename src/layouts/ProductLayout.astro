@@ -1,0 +1,29 @@
+---
+import '@fontsource/poppins'
+import '@fontsource/ibm-plex-sans'
+import '@/styles/globals.css'
+import Header from '@/components/header/Header.astro'
+interface Props {
+  title?: string
+}
+
+const { title = 'Eyewear | Product' } = Astro.props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width; user-scalable=no; initial-scale=1.0"
+    />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="flex flex-col bg-[#f6f6f6] text-[#4b4b4b]">
+    <main class="flex-1">
+      <slot />
+    </main>
+  </body>
+</html>
