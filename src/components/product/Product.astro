@@ -18,8 +18,13 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
         class="w-full h-full object-cover"
       />
     </div>
-    <div class="absolute top-0 left-0 right-0 flex py-5 px-5">
-      <button class="ml-auto">
+    <div
+      class="absolute top-0 left-0 right-0 flex items-center justify-between py-5 px-5"
+    >
+      <button onclick="window.history.back()">
+        <Icon name="eva:arrow-back-fill" class="h-8" />
+      </button>
+      <button>
         <Icon name="mdi:heart-outline" class="h-10" />
       </button>
     </div>
