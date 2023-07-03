@@ -9,6 +9,15 @@ export const $incrementProductAmount = action(
     return store.get()
   }
 )
+export const $productVariant = atom<string | undefined>()
+export const $selectSelectedProductVariant = action(
+  $productVariant,
+  'selectSelectedProductVariant',
+  (store, id) => {
+    store.set(id)
+    return store.get()
+  }
+)
 
 export const $decrementProductAmount = action(
   $productAmountCounter,

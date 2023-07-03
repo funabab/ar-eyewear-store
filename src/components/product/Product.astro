@@ -4,37 +4,118 @@ import ProductLayout from '@/layouts/ProductLayout.astro'
 import { Icon } from 'astro-icon'
 import ProductCounter from '@/islands/product/ProductCounter'
 import ProductPrice from '@/islands/product/ProductPrice'
+import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
 ---
 
 <ProductLayout>
-  <div class="h-[40vh] relative max-w-4xl mx-auto">
-    <Image
-      src="https://picsum.photos/seed/picsum/200/300"
-      alt=""
-      width={500}
-      height={500}
-      class="w-full h-full object-cover"
-    />
-  </div>
-  <div class="absolute top-0 left-0 right-0 flex py-5 px-5">
-    <button class="ml-auto">
-      <Icon name="mdi:heart-outline" class="h-10" />
-    </button>
-  </div>
-  <div class="max-w-2xl mx-auto px-4">
-    <h2 class="font-normal text-2xl mt-5 uppercase">
-      <span class="font-bold"> Mason</span>
-      <span>Sunglasses</span>
-    </h2>
+  <div class="pb-20">
+    <div class="h-[40vh] relative max-w-4xl mx-auto">
+      <Image
+        src="https://picsum.photos/seed/picsum/200/300"
+        alt=""
+        width={500}
+        height={500}
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="absolute top-0 left-0 right-0 flex py-5 px-5">
+      <button class="ml-auto">
+        <Icon name="mdi:heart-outline" class="h-10" />
+      </button>
+    </div>
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="font-normal text-2xl mt-5 uppercase">
+        <span class="font-bold"> Mason</span>
+        <span>Sunglasses</span>
+      </h2>
 
-    <div class="flex justify-between items-center">
-      <ProductCounter client:load />
-      <ProductPrice price={355} client:load />
+      <div class="my-6">
+        <ProductVariantSelector
+          variants={[
+            {
+              id: 'variant1',
+              color: '#232325',
+              name: 'Variant 1',
+            },
+            {
+              id: 'variant2',
+              color: '#4b221d',
+              name: 'Variant 2',
+            },
+            {
+              id: 'variant3',
+              color: '#77695d',
+              name: 'Variant 3',
+            },
+          ]}
+          client:load
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <ProductCounter client:load />
+        <ProductPrice price={355} client:load />
+      </div>
+
+      <details
+        class="mt-10 [&_summary]:hover:text-neutral-800 [&_.icon-open]:open:hidden [&_.icon-close]:open:inline"
+        open
+      >
+        <summary
+          class="uppercase text-neutral-500 list-none flex items-center justify-between transition-colors duration-300"
+        >
+          <span class="font-medium">Description</span>
+
+          <Icon name="radix-icons:caret-down" class="h-8 icon-open" />
+          <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
+        </summary>
+        <p class="font-bold text-black font-ibm-plex-sans py-2">
+          Soft square acetate style with metal T temple decoration
+        </p>
+      </details>
+
+      <details
+        class="mt-5 [&_summary]:hover:text-neutral-800 [&_.icon-open]:open:hidden [&_.icon-close]:open:inline"
+      >
+        <summary
+          class="uppercase text-neutral-500 list-none flex items-center justify-between transition-colors duration-300"
+        >
+          <span class="font-medium">Details</span>
+
+          <Icon name="radix-icons:caret-down" class="h-8 icon-open" />
+          <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
+        </summary>
+        <p class="font-normal text-black font-ibm-plex-sans py-2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+          alias quaerat distinctio tenetur impedit dolor asperiores maxime,
+          sapiente, mollitia inventore reprehenderit fugit laborum aspernatur
+          laboriosam enim maiores reiciendis molestiae soluta?
+        </p>
+      </details>
+
+      <details
+        class="mt-5 [&_summary]:hover:text-neutral-800 [&_.icon-open]:open:hidden [&_.icon-close]:open:inline"
+      >
+        <summary
+          class="uppercase text-neutral-500 list-none flex items-center justify-between transition-colors duration-300"
+        >
+          <span class="font-medium">Delivery</span>
+
+          <Icon name="radix-icons:caret-down" class="h-8 icon-open" />
+          <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
+        </summary>
+        <p class="font-normal text-black font-ibm-plex-sans py-2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+          beatae aperiam dolor commodi eligendi doloremque eaque, aut veritatis
+          possimus? Officia laborum non nobis numquam delectus sapiente maiores
+          voluptate illum vel.
+        </p>
+      </details>
     </div>
   </div>
 
   <div
-    class="absolute bottom-0 left-0 right-0 grid grid-cols-2 md:flex md:justify-end"
+    class="fixed bottom-0 left-0 right-0 grid grid-cols-2 md:flex md:justify-end"
   >
     <button
       class="uppercase font-bold font-ibm-plex-sans bg-neutral-200 py-4 px-10 text-black hover:opacity-70"
