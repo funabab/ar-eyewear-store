@@ -5,17 +5,22 @@ import { Icon } from 'astro-icon'
 import ProductCounter from '@/islands/product/ProductCounter'
 import ProductPrice from '@/islands/product/ProductPrice'
 import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  product: CollectionEntry<'product'>
+}
+
+const product = Astro.props.product
 ---
 
 <ProductLayout>
   <div class="pb-20">
     <div class="h-[40vh] relative max-w-4xl mx-auto">
       <Image
-        src="https://picsum.photos/seed/picsum/200/300"
+        src={product.data.previewImage}
         alt=""
-        width={500}
-        height={500}
-        class="w-full h-full object-cover"
+        class="w-full h-full object-contain"
       />
     </div>
     <div
@@ -30,8 +35,8 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
     </div>
     <div class="max-w-2xl mx-auto px-4">
       <h2 class="font-normal text-2xl mt-5 uppercase">
-        <span class="font-bold"> Mason</span>
-        <span>Sunglasses</span>
+        <span class="font-bold">{product.data.name.split(' ')[0]}</span>
+        <span>{product.data.name.split(' ').slice(1).join(' ')}</span>
       </h2>
 
       <div class="my-6">
@@ -59,7 +64,7 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
 
       <div class="flex justify-between items-center">
         <ProductCounter client:load />
-        <ProductPrice price={355} client:load />
+        <ProductPrice price={product.data.price / 1000} client:load />
       </div>
 
       <details
@@ -75,7 +80,7 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
           <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
         </summary>
         <p class="font-bold text-black font-ibm-plex-sans py-2">
-          Soft square acetate style with metal T temple decoration
+          {product.data.description}
         </p>
       </details>
 
@@ -91,10 +96,7 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
           <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
         </summary>
         <p class="font-normal text-black font-ibm-plex-sans py-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-          alias quaerat distinctio tenetur impedit dolor asperiores maxime,
-          sapiente, mollitia inventore reprehenderit fugit laborum aspernatur
-          laboriosam enim maiores reiciendis molestiae soluta?
+          {product.data.details}
         </p>
       </details>
 
@@ -110,10 +112,7 @@ import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
           <Icon name="radix-icons:caret-up" class="h-8 icon-close hidden" />
         </summary>
         <p class="font-normal text-black font-ibm-plex-sans py-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-          beatae aperiam dolor commodi eligendi doloremque eaque, aut veritatis
-          possimus? Officia laborum non nobis numquam delectus sapiente maiores
-          voluptate illum vel.
+          {product.data.delivery}
         </p>
       </details>
     </div>

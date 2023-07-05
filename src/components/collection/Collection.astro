@@ -1,12 +1,17 @@
 ---
+import { getCollection, getEntry } from 'astro:content'
 import ItemCard from '../card/ItemCard.astro'
-import { COLLECTIONS } from './collections'
+import { getEntries } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
 
 interface Props {
-  collection?: string
+  collection: CollectionEntry<'collection'>['id']
 }
 
-const { collection = 'new' } = Astro.props
+const collections = await getCollection('collection')
+const { collection: collectionId } = Astro.props
+const collection = await getEntry('collection', collectionId)
+const collectonProducts = await getEntries(collection.data.products)
 ---
 
 <div class="py-5">
@@ -14,23 +19,23 @@ const { collection = 'new' } = Astro.props
     class="flex items-start gap-x-4 flex-nowrap overflow-auto scrollbar-none hover:scrollbar-thin"
   >
     {
-      Object.entries(COLLECTIONS).map(([collectionSlug, collectionTitle]) => (
+      collections.map((collection) => (
         <li
           class:list={[
             {
-              'text-black': collectionSlug === collection,
-              'text-[#cacaca]': collectionSlug !== collection,
+              'text-black': collection.id === collectionId,
+              'text-[#cacaca]': collection.id !== collectionId,
             },
           ]}
         >
           <a
             href={
-              collectionSlug === 'new' ? '/' : `/collections/${collectionSlug}`
+              collection.id === 'new' ? '/' : `/collections/${collection.id}`
             }
             class="flex flex-col items-center"
           >
-            <span class="whitespace-nowrap">{collectionTitle}</span>
-            {collectionSlug === collection && <span>&#x2022;</span>}
+            <span class="whitespace-nowrap">{collection.data.title}</span>
+            {collection.id === collectionId && <span>&#x2022;</span>}
           </a>
         </li>
       ))
@@ -38,20 +43,12 @@ const { collection = 'new' } = Astro.props
   </ul>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 mt-5 gap-4">
-    <a href="/item/id">
-      <ItemCard />
-    </a>
-
-    <a href="/item/id">
-      <ItemCard />
-    </a>
-
-    <a href="/item/id">
-      <ItemCard />
-    </a>
-
-    <a href="/item/id">
-      <ItemCard />
-    </a>
+    {
+      collectonProducts.map((product) => (
+        <a href={`/item/${product.id}`}>
+          <ItemCard product={product} />
+        </a>
+      ))
+    }
   </div>
 </div>

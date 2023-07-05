@@ -1,0 +1,24 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Collection from '@/components/collection/Collection.astro'
+import { CollectionEntry, getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const collections = await getCollection(
+    'collection',
+    ({ id }) => id !== 'new'
+  )
+
+  return collections.map((collection) => ({
+    params: {
+      id: collection.id,
+    },
+  }))
+}
+
+const id = Astro.params.id as CollectionEntry<'collection'>['id']
+---
+
+<PageLayout>
+  <Collection collection={id} />
+</PageLayout>
