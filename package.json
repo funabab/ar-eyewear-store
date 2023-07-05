@@ -14,18 +14,23 @@
     "@astrojs/tailwind": "^4.0.0",
     "@fontsource/ibm-plex-sans": "^5.0.3",
     "@fontsource/poppins": "^5.0.3",
+    "@google/model-viewer": "^3.1.1",
+    "@lottiefiles/lottie-player": "^2.0.2",
     "@nanostores/react": "^0.7.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "astro": "^2.7.4",
     "astro-icon": "^0.8.1",
+    "mind-ar": "^1.2.3",
     "nanostores": "^0.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-scrollbar": "^3.0.4",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "three": "^0.154.0"
   },
   "devDependencies": {
+    "@types/three": "^0.152.1",
     "prettier": "^2.8.8",
     "sharp": "^0.32.1"
   }

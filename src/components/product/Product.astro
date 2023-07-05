@@ -1,11 +1,12 @@
 ---
-import { Image } from 'astro:assets'
 import ProductLayout from '@/layouts/ProductLayout.astro'
 import { Icon } from 'astro-icon'
 import ProductCounter from '@/islands/product/ProductCounter'
 import ProductPrice from '@/islands/product/ProductPrice'
 import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
 import type { CollectionEntry } from 'astro:content'
+import preloader from '@/lottie/VR-AR-Cubes-Preloader.json?url'
+import { Image } from 'astro:assets'
 
 interface Props {
   product: CollectionEntry<'product'>
@@ -17,11 +18,28 @@ const product = Astro.props.product
 <ProductLayout>
   <div class="pb-20">
     <div class="h-[40vh] relative max-w-4xl mx-auto">
-      <Image
+      <model-viewer
+        class="w-full h-full [&::part(default-progress-bar)]:hidden"
+        alt={`${product.data.name} model preview`}
+        src={product.data.modelPath}
+        camera-controls
+        shadow-intensity="1"
+        loading="eager"
+      >
+        <lottie-player
+          src={preloader}
+          class="w-full h-full bg-[#f6f6f6] bg-opacity-70 backdrop-blur-md relative"
+          slot="poster"
+          autoplay
+          loop
+        >
+        </lottie-player>
+      </model-viewer>
+      <!-- <Image
         src={product.data.previewImage}
         alt=""
         class="w-full h-full object-contain"
-      />
+      /> -->
     </div>
     <div
       class="absolute top-0 left-0 right-0 flex items-center justify-between py-5 px-5"
@@ -40,26 +58,7 @@ const product = Astro.props.product
       </h2>
 
       <div class="my-6">
-        <ProductVariantSelector
-          variants={[
-            {
-              id: 'variant1',
-              color: '#232325',
-              name: 'Variant 1',
-            },
-            {
-              id: 'variant2',
-              color: '#4b221d',
-              name: 'Variant 2',
-            },
-            {
-              id: 'variant3',
-              color: '#77695d',
-              name: 'Variant 3',
-            },
-          ]}
-          client:load
-        />
+        <ProductVariantSelector variants={product.data.variants} client:load />
       </div>
 
       <div class="flex justify-between items-center">
@@ -130,4 +129,9 @@ const product = Astro.props.product
       >Add to bag</button
     >
   </div>
+
+  <script>
+    import '@lottiefiles/lottie-player'
+    import '@google/model-viewer'
+  </script>
 </ProductLayout>

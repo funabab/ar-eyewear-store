@@ -19,6 +19,13 @@ const productCollection = defineCollection({
       description: z.string(),
       details: z.string(),
       delivery: z.string(),
+      variants: z.array(
+        z.object({
+          id: z.string(),
+          color: z.string(),
+          name: z.string(),
+        })
+      ),
       createdAt: z.string().datetime(),
     }),
 })
