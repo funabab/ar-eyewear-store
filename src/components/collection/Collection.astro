@@ -8,9 +8,12 @@ interface Props {
   collection: CollectionEntry<'collection'>['id']
 }
 
-const collections = await getCollection('collection')
+const collections = (await getCollection('collection')).sort(
+  (a, b) => a.data.order - b.data.order
+)
 const { collection: collectionId } = Astro.props
 const collection = await getEntry('collection', collectionId)
+
 const collectonProducts = await getEntries(collection.data.products)
 ---
 

@@ -4,6 +4,7 @@ const collectionCollection = defineCollection({
   type: 'data',
   schema: z.object({
     title: z.string(),
+    order: z.number(),
     products: z.array(reference('product')),
   }),
 })
