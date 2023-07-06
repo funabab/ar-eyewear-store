@@ -2,22 +2,19 @@
 import { Icon } from 'astro-icon'
 import preloader from '@/lottie/VR-AR-Cubes-Preloader.json?url'
 import type { HTMLAttributes } from 'astro/types'
-interface Props extends HTMLAttributes<'dialog'> {
+interface Props extends HTMLAttributes<'div'> {
   src: string
 }
-const { class: className, src, open, ...props } = Astro.props
+const { class: className, src, ...props } = Astro.props
 ---
 
-<dialog
-  class="backdrop:bg-opacity-0 open:backdrop:bg-opacity-100 transition duration-500 z-50 fixed top-0 left-0 w-screen h-screen text-white backdrop:bg-black"
+<div
+  class="z-50 fixed top-0 left-0 w-screen h-screen text-white bg-black hidden [&_video]:translate-x-0 []"
   data-ar-model-src={src}
   data-ar-viewer-dialog
   {...props}
 >
-  <div
-    data-ar-viewer-container
-    class="w-full h-full absolute left-0 top-0 overflow-hidden"
-  >
+  <div data-ar-viewer-container class="w-full h-full relative left-0 top-0">
   </div>
 
   <div
@@ -28,12 +25,10 @@ const { class: className, src, open, ...props } = Astro.props
     </lottie-player>
   </div>
 
-  <form method="dialog">
-    <button class="left-5 top-5 absolute z-50">
-      <Icon name="uis:times-circle" class="h-10" />
-    </button>
-  </form>
-</dialog>
+  <button class="left-5 top-5 absolute z-50" data-close-button>
+    <Icon name="uis:times-circle" class="h-10" />
+  </button>
+</div>
 
 <script>
   // @ts-ignore
@@ -54,18 +49,19 @@ const { class: className, src, open, ...props } = Astro.props
     type WebGLRenderer,
   } from 'three'
 
-  const elARViewer = document.querySelector(
-    '[data-ar-viewer-dialog]'
-  ) as HTMLDialogElement
-  const elARViewerContainer = elARViewer.querySelector(
+  const elARViewer = document.querySelector('[data-ar-viewer-dialog]') as
+    | HTMLElement
+    | undefined
+  const elARViewerContainer = elARViewer?.querySelector(
     '[data-ar-viewer-container]'
   )
-  const elPreloader = elARViewer.querySelector('[data-is-preloader]')
+  const elCloseBtn = elARViewer?.querySelector('[data-close-button]')
+  const elPreloader = elARViewer?.querySelector('[data-is-preloader]')
 
   const mindarThree = new MindARThree({
     container: elARViewerContainer,
   })
-  const arModelSrc = elARViewer.dataset.arModelSrc
+  const arModelSrc = elARViewer?.dataset.arModelSrc
 
   if (!arModelSrc) {
     throw new Error('arModelSrc is required')
@@ -80,13 +76,14 @@ const { class: className, src, open, ...props } = Astro.props
   const gltfLoader = new GLTFLoader()
   gltfLoader.setDRACOLoader(dracoLoader)
 
-  elARViewer.addEventListener('open-ar-viewer', () => {
-    elARViewer.showModal()
+  elARViewer?.addEventListener('open-ar-viewer', () => {
+    elARViewer.classList.remove('hidden')
     isClosed = false
     start()
   })
 
-  elARViewer.addEventListener('close', () => {
+  elCloseBtn?.addEventListener('click', () => {
+    elARViewer?.classList.add('hidden')
     if (isPresenting) {
       mindarThree.stop()
       isPresenting = false
@@ -106,7 +103,16 @@ const { class: className, src, open, ...props } = Astro.props
     if (isPresenting || !isLoaded || isClosed) {
       return
     }
+
     await mindarThree.start()
+    const elVideo = elARViewerContainer!.querySelector(
+      'video'
+    ) as HTMLVideoElement
+
+    elVideo.style.objectFit = 'cover'
+    elVideo.style.left = '0'
+    elVideo.style.transform = 'scaleX(-1)'
+
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera)
     })
