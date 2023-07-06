@@ -6,7 +6,7 @@ import ProductPrice from '@/islands/product/ProductPrice'
 import ProductVariantSelector from '@/islands/product/ProductVariantSelector'
 import type { CollectionEntry } from 'astro:content'
 import preloader from '@/lottie/VR-AR-Cubes-Preloader.json?url'
-import { Image } from 'astro:assets'
+import ARViewerDialog from '@/components/ar-viewer/ARViewerModal.astro'
 
 interface Props {
   product: CollectionEntry<'product'>
@@ -35,11 +35,6 @@ const product = Astro.props.product
         >
         </lottie-player>
       </model-viewer>
-      <!-- <Image
-        src={product.data.previewImage}
-        alt=""
-        class="w-full h-full object-contain"
-      /> -->
     </div>
     <div
       class="absolute top-0 left-0 right-0 flex items-center justify-between py-5 px-5"
@@ -117,11 +112,13 @@ const product = Astro.props.product
     </div>
   </div>
 
+  <ARViewerDialog src={product.data.modelPath} />
   <div
     class="fixed bottom-0 left-0 right-0 grid grid-cols-2 md:flex md:justify-end"
   >
     <button
       class="uppercase font-bold font-ibm-plex-sans bg-neutral-200 py-4 px-10 text-black hover:opacity-70"
+      onclick={`document.querySelector('[data-ar-viewer-dialog]')?.dispatchEvent(new Event('open-ar-viewer'))`}
       >Try with AR</button
     >
     <button
