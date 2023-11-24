@@ -32,6 +32,6 @@
   "devDependencies": {
     "@types/three": "^0.152.1",
     "prettier": "^2.8.8",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.6"
   }
 }
